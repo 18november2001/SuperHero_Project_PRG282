@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SuperHero_Project_PRG282.Data; 
 
 namespace SuperHero_Project_PRG282.Data
 {
@@ -48,6 +49,31 @@ namespace SuperHero_Project_PRG282.Data
                 double averageScore = double.Parse(parts[5].Trim());
                 double averageAge = double.Parse(parts[6].Trim());
             return new SupSummary(totalHeroes, totalSH, totalAH, totalBH, totalCH, averageScore, averageAge);
+        }
+        public static SupSummary SummaryCalc()
+        {
+             int totalHeroes;
+             int totalSH;
+             int totalAH;
+             int totalBH;
+             int totalCH;
+             double averageScore;
+             double averageAge;
+
+             List<Superhero> superheroes = new List<Superhero>();
+             superheroes = FileOperations.ReadSuperheroesFromFile();
+
+            
+                totalHeroes = superheroes.Count;
+                totalSH = superheroes.Count(s => s.Rank == "S-Rank");
+                totalAH = superheroes.Count(s => s.Rank == "A-Rank");
+                totalBH = superheroes.Count(s => s.Rank == "B-Rank");
+                totalCH = superheroes.Count(s => s.Rank == "C-Rank");
+                averageScore = superheroes.Average(s => s.ExamScore);
+                averageAge = superheroes.Average(s => s.Age);
+                return new SupSummary(totalHeroes, totalSH, totalAH, totalBH, totalCH, averageScore, averageAge);
+            
+
         }
 
         public static string Tosumtxt(SupSummary supSummary)
